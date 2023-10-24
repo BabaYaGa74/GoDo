@@ -4,10 +4,12 @@ import (
 	"database/sql"
 	"fmt"
 	"go_todoApp/config"
+	"html/template"
 	"net/http"
 )
 
 var db *sql.DB
+var templates *template.Template
 
 type Task struct {
 	ID   int    `json:"id"`
@@ -18,12 +20,31 @@ type Task struct {
 func init() {
 	config.ConnectDB()
 	db = config.GetDB()
+
+	templates = template.Must(template.ParseGlob("templates/*.html"))
 }
 
 func GetTasks(w http.ResponseWriter, r *http.Request) {
-	// tasks:= []Task{}
-	fmt.Println("Hello world")
+	tasks := []Task{}
 
+	result, err := db.Query("SELECT id, task, done FROM tasks")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	for result.Next() {
+		var task Task
+		err := result.Scan(&task.ID, &task.Task, &task.Done)
+		if err != nil {
+			http.Error(w, err.Error(), http.StatusInternalServerError)
+			return
+		}
+		tasks = append(tasks, task)
+		fmt.Print(tasks)
+	}
+	w.Header().Set("Content-Type", "text/html")
+	templates.ExecuteTemplate(w, "tasks.html", tasks)
 }
 
 func CreateTask(w http.ResponseWriter, r *http.Request) {
