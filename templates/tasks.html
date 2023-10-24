@@ -1,6 +1,18 @@
 <ul>
   {{range .}}
-  <li>{{.Task}}</li>
+  <li>
+    {{.Task}}
+    <form action="/update" method="POST" style="display: inline">
+      <input type="hidden" name="id" value="{{.ID}}" />
+      <input type="text" name="updateTask" value="{{.Task}}" />
+      <button type="submit">Update</button>
+    </form>
+
+    <form action="/delete" method="POST" style="display: inline">
+      <input type="hidden" name="id" value="{{.ID}}" />
+      <button type="submit">Delete</button>
+    </form>
+  </li>
   {{else}}
   <li>No tasks available!</li>
   {{end}}
