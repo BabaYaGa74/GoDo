@@ -6,6 +6,14 @@
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
   </head>
   <body>
-    <div hx-get="/tasks" hx-trigger="load"></div>
+    <div>
+      <h1>Task Manager</h1>
+      <br />
+      <form hx-post="/tasks" hx-swap="outerHTML" hx-target="#taskList">
+        <input type="text" name="task" placeholder="New task..." required />
+        <button type="submit">Add Task</button>
+      </form>
+    </div>
+    <div id="taskList" hx-get="/tasks" hx-trigger="load"></div>
   </body>
 </html>
