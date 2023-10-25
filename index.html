@@ -3,17 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <title>Go ToDo App</title>
+    <link rel="stylesheet" href="/static/styles.css" />
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
   </head>
   <body>
-    <div
-      style="
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-      "
-    >
+    <div id="app">
       <h1>Task Manager</h1>
       <br />
       <form hx-post="/tasks" hx-swap="outerHTML" hx-target="#taskList">
@@ -21,16 +15,6 @@
         <button type="submit">Add Task</button>
       </form>
     </div>
-    <div
-      id="taskList"
-      hx-get="/tasks"
-      hx-trigger="load"
-      style="
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-      "
-    ></div>
+    <div id="taskList" hx-get="/tasks" hx-trigger="load"></div>
   </body>
 </html>
