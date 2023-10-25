@@ -2,7 +2,6 @@ package handlers
 
 import (
 	"database/sql"
-	"fmt"
 	"go_todoApp/config"
 	"html/template"
 	"net/http"
@@ -41,7 +40,6 @@ func GetTasks(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		tasks = append(tasks, task)
-		fmt.Print(tasks)
 	}
 	w.Header().Set("Content-Type", "text/html")
 	templates.ExecuteTemplate(w, "tasks.html", tasks)
@@ -62,4 +60,38 @@ func CreateTask(w http.ResponseWriter, r *http.Request) {
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 
+}
+
+func DeleteTask(w http.ResponseWriter, r *http.Request) {
+	taskId := r.FormValue("id")
+	if taskId == "" {
+		http.Error(w, "ID is not available", http.StatusBadRequest)
+		return
+	}
+
+	_, err := db.Exec("DELETE FROM tasks WHERE id=?", taskId)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
+}
+
+func UpdateTask(w http.ResponseWriter, r *http.Request) {
+	taskId := r.FormValue("id")
+	updatedTask := r.FormValue("updateTask")
+
+	if taskId == "" || updatedTask == "" {
+		http.Error(w, "Task is required", http.StatusBadRequest)
+		return
+	}
+
+	_, err := db.Exec("UPDATE tasks SET task=? WHERE id = ?", updatedTask, taskId)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	http.Redirect(w, r, "/tasks", http.StatusSeeOther)
 }
