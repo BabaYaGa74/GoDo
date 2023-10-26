@@ -14,17 +14,15 @@ body {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 h1 {
-  color: violet;
+  color: red;
 }
-
 ul {
   list-style-type: none;
   padding: 0;
 }
 
 li {
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   padding: 5px 0;
 }
