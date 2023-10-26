@@ -10,11 +10,15 @@
     <div id="app">
       <h1>Task Manager</h1>
       <br />
-      <form hx-post="/tasks" hx-swap="outerHTML" hx-target="#taskList">
+      <form hx-post="/addTasks" hx-swap="outerHTML" hx-target="#taskList">
         <input type="text" name="task" placeholder="New task..." required />
         <button type="submit">Add Task</button>
       </form>
+
+      <form hx-get="/tasks" hx-swap="outerHTML" hx-target="#taskList">
+        <div id="taskList" hx-get="/tasks" hx-trigger="load"></div>
+        <button type="submit">Get All Task</button>
+      </form>
     </div>
-    <div id="taskList" hx-get="/tasks" hx-trigger="load"></div>
   </body>
 </html>
