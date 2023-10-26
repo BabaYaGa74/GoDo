@@ -1,11 +1,18 @@
 <ul>
   {{range .}}
   <li>
-    {{.Task}}
-    <form action="/update" method="POST" style="display: inline">
+    <span class="task-text">{{.Task}}</span>
+    <button onclick="toggleUpdateInput(this)">Update</button>
+
+    <form
+      action="/update"
+      method="POST"
+      style="display: inline"
+      onsubmit="hideInputAfterUpdate(this)"
+    >
       <input type="hidden" name="id" value="{{.ID}}" />
       <input type="hidden" name="updateTask" value="{{.Task}}" />
-      <button type="submit">Update</button>
+      <button type="submit">Save</button>
     </form>
 
     <form action="/delete" method="POST" style="display: inline">
@@ -17,3 +24,15 @@
   <li>No tasks available!</li>
   {{end}}
 </ul>
+
+<script>
+  function toggleUpdateInput(button) {
+    const form = button.nextElementSibling;
+    form.style.display = form.style.display === "none" ? "inline" : "none";
+  }
+
+  function hideInputAfterUpdate(form) {
+    form.style.display = "none";
+    return true;
+  }
+</script>
