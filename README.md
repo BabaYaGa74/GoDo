@@ -1,2 +1,1 @@
-This is a readme file for this repository
-This readme file is used just for the contribution purposes.
+This is a read me file of a simple task based system that i was going to design but i don't this project will go on for now. Cause its giving me random errors.
