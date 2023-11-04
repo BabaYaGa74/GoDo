@@ -21,6 +21,7 @@ func main() {
 			addTaskUI()
 		case 2:
 			listTasksUI()
+			fmt.Println()
 		case 3:
 			os.Exit(0)
 		default:
@@ -32,9 +33,9 @@ func main() {
 func addTaskUI() {
 	var title, description string
 	fmt.Println("Enter the title : ")
-	fmt.Scanf(title)
+	fmt.Scanln(&title)
 	fmt.Println("Enter the description: ")
-	fmt.Scanf(description)
+	fmt.Scanln(&description)
 
 	task := pkg.Task{
 		ID:          len(pkg.TaskList) + 1,
@@ -51,7 +52,7 @@ func listTasksUI() {
 	tasks := pkg.ListTasks()
 	fmt.Println("Task lists: ")
 	for _, task := range tasks {
-		fmt.Printf("ID: %d\n Title: %s\n Description: %s", task.ID, task.Title, task.Description)
+		fmt.Printf(" ID: %d\n Title: %s\n Description: %s", task.ID, task.Title, task.Description)
+		fmt.Println()
 	}
-	fmt.Println()
 }
