@@ -2,15 +2,16 @@ package main
 
 import (
 	"fmt"
+	"go_todoApp/pkg"
 	"os"
 )
 
 func main() {
 	for {
-		fmt.Println("Task!!")
 		fmt.Println("1. Add Task")
 		fmt.Println("2. List Task")
 		fmt.Println("3. Exit")
+		fmt.Println()
 
 		var choice int
 		fmt.Scanln(&choice)
@@ -31,23 +32,26 @@ func main() {
 func addTaskUI() {
 	var title, description string
 	fmt.Println("Enter the title : ")
-	fmt.Scanln(&title)
+	fmt.Scanf(title)
 	fmt.Println("Enter the description: ")
-	fmt.Scanln(&description)
+	fmt.Scanf(description)
 
-	task := Task{
-		ID:          len(TaskList) + 1,
+	task := pkg.Task{
+		ID:          len(pkg.TaskList) + 1,
 		Title:       title,
 		Description: description,
 	}
-	AddTask(task)
+	pkg.AddTask(task)
 	fmt.Println("Task added successfully!")
+	fmt.Println()
+
 }
 
 func listTasksUI() {
-	tasks := ListTasks()
+	tasks := pkg.ListTasks()
 	fmt.Println("Task lists: ")
 	for _, task := range tasks {
 		fmt.Printf("ID: %d\n Title: %s\n Description: %s", task.ID, task.Title, task.Description)
 	}
+	fmt.Println()
 }
