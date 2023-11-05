@@ -68,3 +68,12 @@ func (list *Todos) Load(filename string) error {
 	}
 	return nil
 }
+
+func (list *Todos) StoreTodo(filename string) error {
+	data, err := json.Marshal(list)
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(filename, data, 0644)
+}
