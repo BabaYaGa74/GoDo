@@ -77,3 +77,7 @@ func (list *Todos) StoreTodo(filename string) error {
 
 	return os.WriteFile(filename, data, 0644)
 }
+
+func (t *Todos) Print() {
+
+}
