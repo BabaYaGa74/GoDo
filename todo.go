@@ -42,6 +42,16 @@ func (list *Todos) MarkComplete(index int) error {
 	return nil
 }
 
+func (list *Todos) MarkAll() {
+	ls := *list
+	len := len(ls)
+	for i := 0; i < len; i++ {
+		ls[i].Completed = false
+		ls[i].UpdatedAt = time.Now()
+		ls[i].CreatedAt = time.Now()
+	}
+}
+
 func (list *Todos) DeleteTodo(index int) error {
 	ls := *list
 	if index <= 0 || index > len(ls) {
@@ -86,6 +96,9 @@ func (list *Todos) StoreTodo(filename string) error {
 }
 
 func (t *Todos) Print() {
+	println()
+	println()
+
 	table := simpletable.New()
 
 	table.Header = &simpletable.Header{
@@ -125,6 +138,10 @@ func (t *Todos) Print() {
 	table.SetStyle(simpletable.StyleUnicode)
 
 	table.Println()
+	println(red(t.timeLeft()))
+	println()
+	println()
+
 }
 
 func (list *Todos) CountPending() string {
@@ -148,4 +165,13 @@ func (list *Todos) CountPending() string {
 
 func (list *Todos) Is_empty() bool {
 	return len(*list) == 0
+}
+
+func (list *Todos) timeLeft() string {
+	ls := *list
+	item := ls[0]
+	diff := time.Until(item.CreatedAt)
+	out := time.Time{}.Add(diff)
+	timer := fmt.Sprint("Time Left: ", out.Format("15:04:05"))
+	return timer
 }
