@@ -169,6 +169,9 @@ func (list *Todos) Is_empty() bool {
 
 func (list *Todos) timeLeft() string {
 	ls := *list
+	if len(ls) == 0 {
+		return "Time Left: 0"
+	}
 	item := ls[0]
 	diff := time.Until(item.CreatedAt)
 	out := time.Time{}.Add(diff)
