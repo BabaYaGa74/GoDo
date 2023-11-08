@@ -20,6 +20,7 @@ func main() {
 	done := flag.Int("done", 0, "Marks the todo as complete")
 	del := flag.Int("del", 0, "Deletes the todo")
 	delAll := flag.Bool("delAll", false, "Deletes all todos")
+	reset := flag.Bool("reset", false, "Reset all todos to incomplete")
 	list := flag.Bool("list", false, "Lists all todos")
 	flag.Parse()
 
@@ -76,6 +77,16 @@ func main() {
 			os.Exit(1)
 		}
 		fmt.Println("Deleted all todos successfully!")
+		os.Exit(0)
+
+	case *reset:
+		todos.MarkAll()
+		err := todos.StoreTodo(todoFile)
+		if err != nil {
+			fmt.Fprintln(os.Stderr, err.Error())
+			os.Exit(1)
+		}
+		fmt.Println("Marked all todos Incomplete!")
 		os.Exit(0)
 
 	case *list:
